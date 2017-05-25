@@ -24,7 +24,7 @@ The script assumes you have a folder of folders with images:
  And a CSV with a column of folder that contains column names:
 
 ```csv
-...,Folder_Base,...
+...,folder_base,...
 ...,h001,...
 ...,h002,...
 ...,h003,...
@@ -34,7 +34,15 @@ The script assumes you have a folder of folders with images:
 Here's how to run it:
 
 ```shell
-ruby the_script.rb path/to/HalperMaterial path/to/halper.csv Folder_Base
+Usage: geniza-csv.rb SEARCH_DIRECTORY CSV_FILE
+
+
+The following values can be changed as environment variables:
+
+  GLOB_PATTERN          default: '*.jpg'
+  FILE_PATH_COLUMN      default: 'file_name'
+  OUTPUT_FILE           default: '/Users/emeryr/code/GIT/geniza-sheets/output.csv'
+  FOLDER_COLUMN         default: 'folder_base'
 ```
 
 The script will create a new CSV `output.csv` with one row per image and data
