@@ -89,7 +89,7 @@ CSV.open output_file, 'wb' do |csv|
     # OK, the directory exists; get all the names
     Dir["#{the_dir}/#{glob_pattern}"].each do |image|
       row << [file_path_column, image]
-      csv = headers.map { |h| row[h] }
+      csv << headers.map { |h| row[h] }
     end
   end
 end
