@@ -53,4 +53,3 @@ Test the script by running:
 ```shell
 $ ruby geniza-csv.rb data/HalperMaterial data/Halper-Marc-with-folder_base-short.csv
 ```
-```
