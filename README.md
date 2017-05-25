@@ -47,3 +47,10 @@ The following values can be changed as environment variables:
 
 The script will create a new CSV `output.csv` with one row per image and data
 repeated as necessary.
+
+Test the script by running:
+
+```shell
+$ ruby geniza-csv.rb data/HalperMaterial data/Halper-Marc-with-folder_base-short.csv
+```
+```
