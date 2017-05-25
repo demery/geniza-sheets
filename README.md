@@ -21,7 +21,7 @@ The script assumes you have a folder of folders with images:
         └── h020_wk1_body0004.tif
 ```
 
- And a CSV with a column of folder that contains column names:
+ And a CSV with a column of folder names (the column name is configurable):
 
 ```csv
 ...,folder_base,...
