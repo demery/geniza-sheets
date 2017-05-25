@@ -1,4 +1,4 @@
-# Geniza::Sheets
+# geniza-sheets.rb
 
 The script assumes you have a folder of folders with images:
 
