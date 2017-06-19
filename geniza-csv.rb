@@ -7,10 +7,11 @@ require 'find'
 
 CMD = File.basename __FILE__
 
-glob_pattern     = ENV['GLOB_PATTERN'] || '*.jpg'
-file_path_column = ENV['FILE_PATH_COLUMN'] || 'file_name'
-output_file      = ENV['OUTPUT_FILE'] ||  File.join(Dir.pwd, 'output.csv')
-column           = ENV['FOLDER_COLUMN'] || 'folder_base'
+glob_pattern      = ENV['GLOB_PATTERN'] || '*.jpg'
+recto_file_column = ENV['RECTO_FILE_COLUMN'] || 'recto_file'
+verso_file_column = ENV['VERSO_FILE_COLUMN'] || 'verso_file'
+output_file       = ENV['OUTPUT_FILE'] ||  File.join(Dir.pwd, 'output.csv')
+column            = ENV['FOLDER_COLUMN'] || 'folder_base'
 
 ############################################################################
 # METHODS
@@ -57,7 +58,8 @@ end
 
 # get this first row of the CSV, the headers
 headers = CSV.open(csv_file, 'r') { |csv| csv.first }
-headers << file_path_column
+headers << recto_file_column
+headers << verso_file_column
 
 unless headers.include? column
   exit_with_error "ERROR: CSV lacks FOLDER_COLUMN '#{column}'"
@@ -86,9 +88,25 @@ CSV.open output_file, 'wb' do |csv|
       next
     end
 
-    # OK, the directory exists; get all the names
-    Dir["#{the_dir}/#{glob_pattern}"].each do |image|
-      row << [file_path_column, image]
+    # OK, the directory exists; get all the names. We assume the images are
+    # recto and verson corresponding to even and odd indexes:
+    #
+    # data/HalperMaterial/h001/h001_wk1_body0001.jpg  recto  index 0
+    # data/HalperMaterial/h001/h001_wk1_body0002.jpg  verso  index 1
+    pairs = []
+    Dir["#{the_dir}/#{glob_pattern}"].each_with_index do |image, i|
+      if i.even?
+        pairs << [image] # this is the recto; an new array
+      else
+        pairs.last << image # this is the recto; push onto last array
+      end
+    end
+
+    pairs.each do |pair|
+      # there's always a recto
+      row << [recto_file_column, pair.first]
+      # only get the verso when the array has two members
+      row << [verso_file_column, pair.last] if pair.size == 2
       csv << headers.map { |h| row[h] }
     end
   end
