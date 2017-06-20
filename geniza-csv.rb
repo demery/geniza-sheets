@@ -94,7 +94,7 @@ CSV.open output_file, 'wb' do |csv|
     # data/HalperMaterial/h001/h001_wk1_body0001.jpg  recto  index 0
     # data/HalperMaterial/h001/h001_wk1_body0002.jpg  verso  index 1
     pairs = []
-    Dir["#{the_dir}/#{glob_pattern}"].each_with_index do |image, i|
+    Dir["#{the_dir}/#{glob_pattern}"].sort.each_with_index do |image, i|
       if i.even?
         pairs << [image] # this is the recto; an new array
       else
