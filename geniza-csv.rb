@@ -104,9 +104,9 @@ CSV.open output_file, 'wb' do |csv|
 
     pairs.each do |pair|
       # there's always a recto
-      row << [recto_file_column, pair.first]
+      row['recto_file'] = pair.first
       # only get the verso when the array has two members
-      row << [verso_file_column, pair.last] if pair.size == 2
+      row['verso_file'] = pair.size == 2 ? pair.last : ''
       csv << headers.map { |h| row[h] }
     end
   end
